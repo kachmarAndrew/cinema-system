@@ -30,6 +30,10 @@ public class Logger {
         log.info("User {}, got an errorPage with code {}, {}", markEmail(email), statusCode, message);
     }
 
+    public void logPasswordRecoveryRequest(String email) {
+        log.info("Password recovery request: {}", markEmail(email));
+    }
+
     public void logPasswordResetSuccess(String email) {
         log.info("Password reset success: {}", markEmail(email));
     }
