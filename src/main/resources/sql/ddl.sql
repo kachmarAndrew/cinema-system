@@ -88,6 +88,16 @@ CREATE TABLE order_items
 );
 
 -- ============================================
+-- 7️⃣ REVIEWS -> to films
+-- ============================================
+CREATE TABLE reviews (
+    id BIGSERIAL PRIMARY KEY,
+    user_name VARCHAR(20) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    film_id BIGINT NOT NULL REFERENCES films (id) ON DELETE CASCADE
+);
+
+-- ============================================
 -- Indexes (optional -> for performance)
 -- ============================================
 CREATE INDEX idx_tickets_session_id ON tickets (session_id);

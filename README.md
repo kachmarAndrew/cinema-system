@@ -10,6 +10,8 @@ cinema-system/
     │   │   │       ├── controller/
     │   │   │       ├── dto/
     │   │   │       ├── entity/
+    │   │   │       ├── exeption/
+    │   │   │       ├── logger/
     │   │   │       ├── mapper/
     │   │   │       ├── repository/
     │   │   │       ├── service/

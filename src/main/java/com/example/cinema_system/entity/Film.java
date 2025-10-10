@@ -38,4 +38,7 @@ public class Film {
 
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Session> filmSessions; // many to one(One film many sessions);
+
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
+    private List<Review> reviews;
 }

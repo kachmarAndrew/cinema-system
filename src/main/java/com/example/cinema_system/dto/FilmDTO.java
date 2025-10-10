@@ -20,5 +20,6 @@ public class FilmDTO {
     private LocalDateTime releaseAt;
     private LocalDateTime endAt;
     private List<SessionDTO> sessions;
+    private List<ReviewDTO> reviews;
 
 }
