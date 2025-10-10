@@ -14,7 +14,6 @@ import java.util.List;
 @Builder
 public class FilmDTO {
 
-
     private Long id;
     private String name;
     private String genre;
