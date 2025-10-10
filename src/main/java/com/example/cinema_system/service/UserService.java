@@ -5,20 +5,21 @@ import com.example.cinema_system.entity.enums.Role;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
     UserDTO register(UserDTO userDTO);
-    void deleteUser(Long userId);
+    void deleteUser(String email);
 
-    Boolean existByEmail(String email);
-    UserDTO getUserByEmail(String email);
-    UserDTO getUserById(Long id);
+    Boolean existsByEmail(String email);
+    Optional<UserDTO> getUserByEmail(String email);
+    Optional<UserDTO> getUserById(Long id);
 
     void changePassword(String email, String newPassword);
     void addToBalance(String email, BigDecimal amount);
     void decreaseBalance(String email, BigDecimal amount);
-    void changeUserRole(Long userId, Role role);
+    void changeUserRole(String email, Role role);
 
     List<UserDTO> getUsersByRole(Role role);
 
