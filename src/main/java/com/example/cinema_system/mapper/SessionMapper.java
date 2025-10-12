@@ -6,7 +6,9 @@ import com.example.cinema_system.entity.Session;
 import com.example.cinema_system.exception.FilmNotFoundException;
 import com.example.cinema_system.repository.FilmRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class SessionMapper implements ClassMapper<Session, SessionDTO> {
 

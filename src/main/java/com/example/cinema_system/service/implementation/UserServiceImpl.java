@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
         securityLogger.logRegistrationSuccess(userDTO.getEmail());
         userRepository.save(user);
-        return userMapper.toUserDTO(user);
+        return userMapper.toDTO(user);
     }
 
     @Override
@@ -56,14 +56,14 @@ public class UserServiceImpl implements UserService {
     public Optional<UserDTO> getUserByEmail(String email) {
         return userRepository
                 .findUserByEmail(email)
-                .map(userMapper::toUserDTO);
+                .map(userMapper::toDTO);
     }
 
     @Override
     public Optional<UserDTO> getUserById(Long id) {
         return userRepository
                 .findUserById(id)
-                .map(userMapper::toUserDTO);
+                .map(userMapper::toDTO);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getUsersByRole(Role role) {
         return userRepository
                 .findUsersByRole(role).stream()
-                .map(userMapper::toUserDTO)
+                .map(userMapper::toDTO)
                 .toList();
     }
 

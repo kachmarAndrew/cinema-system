@@ -3,7 +3,9 @@ package com.example.cinema_system.mapper;
 import com.example.cinema_system.dto.FilmDTO;
 import com.example.cinema_system.entity.Film;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class FilmMapper implements ClassMapper<Film, FilmDTO> {
 

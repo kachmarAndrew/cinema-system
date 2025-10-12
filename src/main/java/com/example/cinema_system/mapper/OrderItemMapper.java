@@ -11,7 +11,9 @@ import com.example.cinema_system.exception.TicketNotFoundException;
 import com.example.cinema_system.repository.OrderRepository;
 import com.example.cinema_system.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class OrderItemMapper implements ClassMapper<OrderItem, OrderItemDTO> {
 

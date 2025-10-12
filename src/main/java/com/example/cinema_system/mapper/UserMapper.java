@@ -7,16 +7,14 @@ import com.example.cinema_system.entity.User;
 import com.example.cinema_system.repository.OrderRepository;
 import com.example.cinema_system.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class UserMapper implements ClassMapper<User, UserDTO> {
 
-    private final TicketMapper ticketMapper;
-    private final OrderMapper orderMapper;
     private final EnumMapper enumMapper;
     private final TicketRepository ticketRepository;
     private final OrderRepository orderRepository;

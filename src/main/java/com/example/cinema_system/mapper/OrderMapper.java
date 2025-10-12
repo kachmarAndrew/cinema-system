@@ -8,9 +8,11 @@ import com.example.cinema_system.exception.UserNotFoundException;
 import com.example.cinema_system.repository.OrderItemRepository;
 import com.example.cinema_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class OrderMapper implements ClassMapper<Order, OrderDTO> {
 
@@ -53,5 +55,7 @@ public class OrderMapper implements ClassMapper<Order, OrderDTO> {
                         .map(orderItemMapper::toDTO)
                         .toList())
                 .build();
+
+        return orderDTO;
     }
 }

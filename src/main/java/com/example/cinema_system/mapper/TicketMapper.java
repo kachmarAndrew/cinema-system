@@ -9,8 +9,9 @@ import com.example.cinema_system.exception.UserNotFoundException;
 import com.example.cinema_system.repository.SessionRepository;
 import com.example.cinema_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-
+@Component
 @RequiredArgsConstructor
 public class TicketMapper implements ClassMapper<Ticket, TicketDTO> {
 
