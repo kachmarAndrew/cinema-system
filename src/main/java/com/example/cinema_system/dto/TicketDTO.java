@@ -1,6 +1,7 @@
 package com.example.cinema_system.dto;
 
 import com.example.cinema_system.entity.enums.TicketStatus;
+import com.example.cinema_system.util.DataTransferObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TicketDTO {
+public class TicketDTO implements DataTransferObject {
 
     private Long id;
     private Long sessionId;
@@ -21,7 +22,7 @@ public class TicketDTO {
     private Integer hallNumber;
     private Integer rowNumber;
     private Integer seatNumber;
-    private String ticketStatus;
+    private String status;
     private BigDecimal price;
     private LocalDateTime createdAt;
 

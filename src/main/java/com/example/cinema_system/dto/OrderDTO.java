@@ -1,5 +1,6 @@
 package com.example.cinema_system.dto;
 
+import com.example.cinema_system.util.DataTransferObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderDTO {
+public class OrderDTO implements DataTransferObject {
 
     private Long id;
     private Long userId;

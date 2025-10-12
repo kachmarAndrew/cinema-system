@@ -1,6 +1,7 @@
 package com.example.cinema_system.dto;
 
 import com.example.cinema_system.entity.enums.Role;
+import com.example.cinema_system.util.DataTransferObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +13,12 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public class UserDTO implements DataTransferObject {
 
     private Long id;
     private String email;
     private String password;
-    private Role role;
+    private String role;
     private BigDecimal balance;
 
 }

@@ -1,30 +1,58 @@
 package com.example.cinema_system.mapper;
 
 import com.example.cinema_system.dto.UserDTO;
+import com.example.cinema_system.entity.Order;
+import com.example.cinema_system.entity.Ticket;
 import com.example.cinema_system.entity.User;
+import com.example.cinema_system.repository.OrderRepository;
+import com.example.cinema_system.repository.TicketRepository;
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", uses = {TicketMapper.class, OrderMapper.class, EnumMapper.class})
-public abstract class UserMapper {
+import java.util.List;
 
-    protected final TicketMapper ticketMapper;
-    protected final OrderMapper orderMapper;
-    protected final EnumMapper enumMapper;
+@RequiredArgsConstructor
+public class UserMapper implements ClassMapper<User, UserDTO> {
 
-    public UserMapper(TicketMapper ticketMapper, OrderMapper orderMapper, EnumMapper enumMapper) {
-        this.ticketMapper = ticketMapper;
-        this.orderMapper = orderMapper;
-        this.enumMapper = enumMapper;
+    private final TicketMapper ticketMapper;
+    private final OrderMapper orderMapper;
+    private final EnumMapper enumMapper;
+    private final TicketRepository ticketRepository;
+    private final OrderRepository orderRepository;
+
+    @Override
+    public User toEntity(UserDTO userDTO) {
+        if (userDTO == null) return null;
+
+        List<Ticket> tickets = ticketRepository.findAllByUserId(userDTO.getId());
+        List<Order> orders = orderRepository.findAllByUserId(userDTO.getId());
+
+        User user = User.builder()
+                .id(userDTO.getId())
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .role(enumMapper.stringToRole(userDTO.getRole()))
+                .balance(userDTO.getBalance())
+                .tickets(tickets)
+                .orders(orders)
+                .build();
+
+        return user;
     }
 
-    @Mapping(target = "role", expression = "java(enumMapper.roleToString(user.getRole()))")
-    @Mapping(target = "tickets", source = "tickets")
-    @Mapping(target = "orders", source = "orders")
-    public abstract UserDTO toUserDTO(User user);
+    @Override
+    public UserDTO toDTO(User entity) {
+        if (entity == null) return null;
 
-    @Mapping(target = "role", expression = "java(enumMapper.stringToRole(userDTO.getRole()))")
-    @Mapping(target = "tickets", ignore = true)
-    @Mapping(target = "orders", ignore = true)
-    public abstract User toUser(UserDTO userDTO);
+        UserDTO userDTO = UserDTO.builder()
+                .id(entity.getId())
+                .email(entity.getEmail())
+                .password(entity.getPassword())
+                .role(enumMapper.roleToString(entity.getRole()))
+                .balance(entity.getBalance())
+                .build();
+
+        return userDTO;
+    }
 }

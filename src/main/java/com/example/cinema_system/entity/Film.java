@@ -37,7 +37,7 @@ public class Film {
     private LocalDateTime endAt;
 
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
-    private List<Session> filmSessions; // many to one(One film many sessions);
+    private List<Session> sessions; // many to one(One film many sessions);
 
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Review> reviews;

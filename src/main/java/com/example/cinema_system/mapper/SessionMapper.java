@@ -3,32 +3,52 @@ package com.example.cinema_system.mapper;
 import com.example.cinema_system.dto.SessionDTO;
 import com.example.cinema_system.entity.Film;
 import com.example.cinema_system.entity.Session;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.cinema_system.exception.FilmNotFoundException;
+import com.example.cinema_system.repository.FilmRepository;
+import lombok.RequiredArgsConstructor;
 
-@Mapper(componentModel = "spring", uses = {TicketMapper.class, EnumMapper.class})
-public abstract class SessionMapper {
+@RequiredArgsConstructor
+public class SessionMapper implements ClassMapper<Session, SessionDTO> {
 
-    protected final TicketMapper ticketMapper;
+    private final TicketMapper ticketMapper;
+    private final FilmRepository filmRepository;
 
-    public SessionMapper(TicketMapper ticketMapper) {
-        this.ticketMapper = ticketMapper;
+    @Override
+    public Session toEntity(SessionDTO sessionDTO) {
+        if (sessionDTO == null) return null;
+
+        Film film = filmRepository
+                .findFilmById(sessionDTO.getFilmId())
+                .orElseThrow(() -> new FilmNotFoundException("Film with id: " + sessionDTO.getFilmId() + " not found"));
+
+        Session session = Session.builder()
+                .film(film)
+                .quantityOfSeats(sessionDTO.getQuantityOfSeats())
+                .startAt(sessionDTO.getStartAt())
+                .endsAt(sessionDTO.getEndAt())
+                .tickets(sessionDTO.getTickets().stream()
+                        .map(ticketMapper::toEntity)
+                        .toList())
+                .build();
+
+        return session;
     }
 
-    @Mapping(source = "film.id", target = "filmId")
-    @Mapping(target = "tickets", source = "tickets")
-    public abstract SessionDTO toSessionDTO(Session session);
+    @Override
+    public SessionDTO toDTO(Session entity) {
+        if (entity == null) return null;
 
-    @Mapping(target = "film", source = "filmId", qualifiedByName = "idToFilm")
-    public abstract Session toSession(SessionDTO dto);
+        SessionDTO sessionDTO = SessionDTO.builder()
+                .id(entity.getId())
+                .filmId(entity.getFilm().getId())
+                .quantityOfSeats(entity.getQuantityOfSeats())
+                .startAt(entity.getStartAt())
+                .endAt(entity.getEndsAt())
+                .tickets(entity.getTickets().stream()
+                        .map(ticketMapper::toDTO)
+                        .toList())
+                .build();
 
-    @Named("idToFilm")
-    protected Film idToFilm(Long id) {
-        if (id == null) return null;
-        Film film = new Film();
-        film.setId(id);
-        return film;
+        return sessionDTO;
     }
 }

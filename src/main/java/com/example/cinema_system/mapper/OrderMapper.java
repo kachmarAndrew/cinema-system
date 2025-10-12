@@ -2,36 +2,56 @@ package com.example.cinema_system.mapper;
 
 import com.example.cinema_system.dto.OrderDTO;
 import com.example.cinema_system.entity.Order;
+import com.example.cinema_system.entity.OrderItem;
 import com.example.cinema_system.entity.User;
-import lombok.AllArgsConstructor;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.cinema_system.exception.UserNotFoundException;
+import com.example.cinema_system.repository.OrderItemRepository;
+import com.example.cinema_system.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 
-@Mapper(componentModel = "spring", uses = {OrderItemMapper.class})
-public abstract class OrderMapper {
+import java.util.List;
 
-    protected final OrderItemMapper orderItemMapper;
+@RequiredArgsConstructor
+public class OrderMapper implements ClassMapper<Order, OrderDTO> {
 
-    public OrderMapper(OrderItemMapper orderItemMapper) {
-        this.orderItemMapper = orderItemMapper;
+    private final OrderItemMapper orderItemMapper;
+    private final UserRepository userRepository;
+    private final OrderItemRepository orderItemRepository;
+
+    @Override
+    public Order toEntity(OrderDTO orderDTO) {
+        if (orderDTO == null) return null;
+
+        User user = userRepository
+                .findUserById(orderDTO.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + orderDTO.getUserId() + " not found"));
+
+        Order order = Order.builder()
+                .id(orderDTO.getId())
+                .user(user)
+                .total(orderDTO.getTotal())
+                .paidAt(orderDTO.getPaidAt())
+                .items(orderDTO.getItems().stream()
+                        .map(orderItemMapper::toEntity)
+                        .toList())
+                .build();
+
+        return order;
+
     }
 
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(target = "items", source = "items")
-    public abstract OrderDTO toOrderDTO(Order order);
+    @Override
+    public OrderDTO toDTO(Order entity) {
+        if (entity == null) return null;
 
-    @Mapping(target = "user", source = "userId", qualifiedByName = "idToUser")
-    @Mapping(target = "items", source = "items")
-    public abstract Order toOrder(OrderDTO dto);
-
-    @Named("idToUser")
-    protected User idToUser(Long id) {
-        if (id == null) return null;
-        User user = new User();
-        user.setId(id);
-        return user;
+        OrderDTO orderDTO = OrderDTO.builder()
+                .id(entity.getId())
+                .userId(entity.getUser().getId())
+                .total(entity.getTotal())
+                .paidAt(entity.getPaidAt())
+                .items(entity.getItems().stream()
+                        .map(orderItemMapper::toDTO)
+                        .toList())
+                .build();
     }
-
 }

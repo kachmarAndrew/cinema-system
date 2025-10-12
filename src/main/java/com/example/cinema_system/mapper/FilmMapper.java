@@ -2,26 +2,55 @@ package com.example.cinema_system.mapper;
 
 import com.example.cinema_system.dto.FilmDTO;
 import com.example.cinema_system.entity.Film;
-import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
-@Mapper(componentModel = "spring", uses = { SessionMapper.class, EnumMapper.class })
-public abstract class FilmMapper {
+@RequiredArgsConstructor
+public class FilmMapper implements ClassMapper<Film, FilmDTO> {
 
-    protected final SessionMapper sessionMapper;
-    protected final EnumMapper enumMapper;
+    private final SessionMapper sessionMapper;
+    private final ReviewMapper reviewMapper;
+    private final EnumMapper enumMapper;
 
-    public FilmMapper(SessionMapper sessionMapper, EnumMapper enumMapper) {
-        this.sessionMapper = sessionMapper;
-        this.enumMapper = enumMapper;
+    @Override
+    public Film toEntity(FilmDTO filmDTO) {
+        if (filmDTO == null) return null;
+
+        Film film = Film.builder()
+                .id(filmDTO.getId())
+                .name(filmDTO.getName())
+                .genre(enumMapper.stringToGenre(filmDTO.getGenre()))
+                .releaseAt(filmDTO.getReleaseAt())
+                .endAt(filmDTO.getEndAt())
+                .sessions(filmDTO.getSessions().stream()
+                        .map(sessionMapper::toEntity)
+                        .toList())
+                .reviews(filmDTO.getReviews().stream()
+                        .map(reviewMapper::toEntity)
+                        .toList())
+                .build();
+
+        return film;
     }
 
-    @Mapping(target = "sessions", source = "sessions") // MapStruct автоматично викличе SessionMapper
-    @Mapping(target = "genre", expression = "java(enumMapper.genreToString(film.getGenre()))")
-    public abstract FilmDTO toFilmDTO(Film film);
+    @Override
+    public FilmDTO toDTO(Film entity) {
+        if (entity == null) return null;
 
-    @Mapping(target = "sessions", ignore = true) // sessions створюємо окремо
-    @Mapping(target = "genre", expression = "java(enumMapper.stringToGenre(filmDTO.getGenre()))")
-    public abstract Film toFilm(FilmDTO filmDTO);
+        FilmDTO filmDTO = FilmDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .genre(enumMapper.genreToString(entity.getGenre()))
+                .releaseAt(entity.getReleaseAt())
+                .endAt(entity.getEndAt())
+                .sessions(entity.getSessions().stream()
+                        .map(sessionMapper::toDTO)
+                        .toList())
+                .reviews(entity.getReviews().stream()
+                        .map(reviewMapper::toDTO)
+                        .toList())
+                .build();
+
+        return filmDTO;
+    }
 }
 

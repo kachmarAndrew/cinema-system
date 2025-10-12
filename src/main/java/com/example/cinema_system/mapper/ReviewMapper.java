@@ -3,26 +3,46 @@ package com.example.cinema_system.mapper;
 import com.example.cinema_system.dto.ReviewDTO;
 import com.example.cinema_system.entity.Film;
 import com.example.cinema_system.entity.Review;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import com.example.cinema_system.exception.FilmNotFoundException;
+import com.example.cinema_system.repository.FilmRepository;
+import lombok.RequiredArgsConstructor;
 
-@Mapper(componentModel = "spring")
-public interface ReviewMapper {
+@RequiredArgsConstructor
+public class ReviewMapper implements ClassMapper<Review, ReviewDTO> {
 
-    // Entity -> DTO
-    @Mapping(source = "film.id", target = "filmId")
-    ReviewDTO toReviewDTO(Review review);
+    private final FilmRepository filmRepository;
 
-    // DTO -> Entity
-    @Mapping(source = "filmId", target = "film", qualifiedByName = "mapFilmIdToFilm")
-    Review toReview(ReviewDTO reviewDTO);
 
-    @Named("mapFilmIdToFilm")
-    default Film mapFilmIdToFilm(Long filmId) {
-        if (filmId == null) return null;
-        Film film = new Film();
-        film.setId(filmId);
-        return film;
+    @Override
+    public Review toEntity(ReviewDTO reviewDTO) {
+        if (reviewDTO == null) return null;
+
+        Film film = filmRepository
+                .findFilmById(reviewDTO.getFilmId())
+                .orElseThrow(() -> new FilmNotFoundException("Film with id: " + reviewDTO.getFilmId() + " not found"));
+
+        Review review = Review.builder()
+                .id(reviewDTO.getId())
+                .userName(reviewDTO.getUserName())
+                .film(film)
+                .description(reviewDTO.getDescription())
+                .build();
+
+        return review;
+    }
+
+    @Override
+    public ReviewDTO toDTO(Review entity) {
+        if (entity == null) return null;
+
+        ReviewDTO reviewDTO = ReviewDTO.builder()
+                .id(entity.getId())
+                .userName(entity.getUserName())
+                .filmId(entity.getFilm().getId())
+                .description(entity.getDescription())
+                .build();
+
+        return reviewDTO;
+
     }
 }

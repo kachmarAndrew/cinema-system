@@ -4,42 +4,64 @@ import com.example.cinema_system.dto.TicketDTO;
 import com.example.cinema_system.entity.Session;
 import com.example.cinema_system.entity.Ticket;
 import com.example.cinema_system.entity.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import com.example.cinema_system.exception.SessionNotFoundException;
+import com.example.cinema_system.exception.UserNotFoundException;
+import com.example.cinema_system.repository.SessionRepository;
+import com.example.cinema_system.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 
-@Mapper(componentModel = "spring", uses = {EnumMapper.class})
-public abstract class TicketMapper {
 
-    protected final EnumMapper enumMapper;
+@RequiredArgsConstructor
+public class TicketMapper implements ClassMapper<Ticket, TicketDTO> {
 
-    public TicketMapper(EnumMapper enumMapper) {
-        this.enumMapper = enumMapper;
+    private final EnumMapper enumMapper;
+    private final SessionRepository sessionRepository;
+    private final UserRepository userRepository;
+
+
+    @Override
+    public Ticket toEntity(TicketDTO ticketDTO) {
+        if (ticketDTO == null) return null;
+
+        Session session = sessionRepository
+                .findSessionById(ticketDTO.getSessionId())
+                .orElseThrow(() -> new SessionNotFoundException("Session with id: " + ticketDTO.getSessionId() + "not found"));
+
+        User user = userRepository
+                .findUserById(ticketDTO.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + ticketDTO.getUserId() + " not found"));
+
+        Ticket ticket = Ticket.builder()
+                .id(ticketDTO.getId())
+                .session(session)
+                .user(user)
+                .hallNumber(ticketDTO.getHallNumber())
+                .rowNumber(ticketDTO.getRowNumber())
+                .seatNumber(ticketDTO.getSeatNumber())
+                .status(enumMapper.stringToTicketStatus(ticketDTO.getStatus()))
+                .price(ticketDTO.getPrice())
+                .createdAt(ticketDTO.getCreatedAt())
+                .build();
+
+        return ticket;
     }
 
-    @Mapping(source = "session.id", target = "sessionId")
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(target = "ticketStatus", expression = "java(enumMapper.ticketStatusToString(ticket.getStatus()))")
-    public abstract TicketDTO toTicketDTO(Ticket ticket);
+    @Override
+    public TicketDTO toDTO(Ticket entity) {
+        if (entity == null) return null;
 
-    @Mapping(target = "session", source = "sessionId", qualifiedByName = "idToSession")
-    @Mapping(target = "user", source = "userId", qualifiedByName = "idToUser")
-    @Mapping(target = "status", expression = "java(enumMapper.stringToTicketStatus(ticketDTO.getTicketStatus()))")
-    public abstract Ticket toTicket(TicketDTO ticketDTO);
+        TicketDTO ticketDTO = TicketDTO.builder()
+                .id(entity.getId())
+                .sessionId(entity.getSession().getId())
+                .userId(entity.getUser().getId())
+                .hallNumber(entity.getHallNumber())
+                .rowNumber(entity.getRowNumber())
+                .seatNumber(entity.getSeatNumber())
+                .status(enumMapper.ticketStatusToString(entity.getStatus()))
+                .price(entity.getPrice())
+                .createdAt(entity.getCreatedAt())
+                .build();
 
-    @Named("idToSession")
-    protected Session idToSession(Long id) {
-        if (id == null) return null;
-        Session session = new Session();
-        session.setId(id);
-        return session;
-    }
-
-    @Named("idToUser")
-    protected User idToUser(Long id) {
-        if (id == null) return null;
-        User user = new User();
-        user.setId(id);
-        return user;
+        return ticketDTO;
     }
 }

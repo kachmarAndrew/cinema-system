@@ -1,37 +1,56 @@
 package com.example.cinema_system.mapper;
 
+
+import com.example.cinema_system.dto.OrderDTO;
 import com.example.cinema_system.dto.OrderItemDTO;
 import com.example.cinema_system.entity.Order;
 import com.example.cinema_system.entity.OrderItem;
 import com.example.cinema_system.entity.Ticket;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import com.example.cinema_system.exception.OrderNotFoundException;
+import com.example.cinema_system.exception.TicketNotFoundException;
+import com.example.cinema_system.repository.OrderRepository;
+import com.example.cinema_system.repository.TicketRepository;
+import lombok.RequiredArgsConstructor;
 
-@Mapper(componentModel = "spring", uses = {TicketMapper.class})
-public abstract class OrderItemMapper {
+@RequiredArgsConstructor
+public class OrderItemMapper implements ClassMapper<OrderItem, OrderItemDTO> {
 
-    @Mapping(source = "order.id", target = "orderId")
-    @Mapping(source = "ticket.id", target = "ticketId")
-    public abstract OrderItemDTO toOrderItemDTO(OrderItem orderItem);
+    private final OrderRepository orderRepository;
+    private final TicketRepository ticketRepository;
 
-    @Mapping(target = "order", source = "orderId", qualifiedByName = "idToOrder")
-    @Mapping(target = "ticket", source = "ticketId", qualifiedByName = "idToTicket")
-    public abstract OrderItem toOrderItem(OrderItemDTO orderItemDTO);
 
-    @Named("idToOrder")
-    protected Order idToOrder(Long id){
-        if (id == null) return null;
-        Order order = new Order();
-        order.setId(id);
-        return order;
+    @Override
+    public OrderItem toEntity(OrderItemDTO orderItemDTO) {
+        if (orderItemDTO == null) return null;
+
+        Order order = orderRepository
+                .findOrderById(orderItemDTO.getOrderId())
+                .orElseThrow(() -> new OrderNotFoundException("Order with id: " + orderItemDTO.getOrderId() + " not found"));
+
+        Ticket ticket = ticketRepository
+                .findTicketById(orderItemDTO.getTicketId())
+                .orElseThrow(() -> new TicketNotFoundException("Ticket with id: " + orderItemDTO.getTicketId() + " not found"));
+
+        OrderItem orderItem = OrderItem.builder()
+                .id(orderItemDTO.getId())
+                .order(order)
+                .ticket(ticket)
+                .price(orderItemDTO.getPrice())
+                .build();
+
+        return orderItem;
     }
 
-    @Named("idToTicket")
-    protected Ticket idToTicket(Long id) {
-        if (id == null) return null;
-        Ticket ticket = new Ticket();
-        ticket.setId(id);
-        return ticket;
+    @Override
+    public OrderItemDTO toDTO(OrderItem entity) {
+        if (entity == null) return null;
+
+        OrderItemDTO orderItemDTO = OrderItemDTO.builder()
+                .id(entity.getId())
+                .orderId(entity.getOrder().getId())
+                .ticketId(entity.getTicket().getId())
+                .build();
+
+        return orderItemDTO;
     }
 }
