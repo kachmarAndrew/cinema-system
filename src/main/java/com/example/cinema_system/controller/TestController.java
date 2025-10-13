@@ -13,6 +13,12 @@ public class TestController {
 
     @GetMapping("/hello") 
     public String hello() {
-        return "hello test commit yaryna";
+        return "hello test commit Yaryna";
+    }
+    
+
+    @GetMapping("/helloViktoria")
+    public String helloViktoria() {
+        return "hello test commit Viktoria";
     }
 }
