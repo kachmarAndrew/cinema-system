@@ -10,4 +10,9 @@ public class TestController {
     public String helloWorld() {
         return "Hello world!";
     }
+
+    @GetMapping("/hello") 
+    public String hello() {
+        return "hello test commit yaryna";
+    }
 }
