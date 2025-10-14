@@ -1,5 +1,6 @@
 package com.example.cinema_system.entity;
 
+import com.example.cinema_system.entity.enums.FilmAssessment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,10 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "film_assessment", nullable = false)
+    private FilmAssessment filmAssessment;
 
     @Column(name = "user_name", nullable = false)
     private String userName;

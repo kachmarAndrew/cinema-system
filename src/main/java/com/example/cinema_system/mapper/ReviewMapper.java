@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class ReviewMapper implements ClassMapper<Review, ReviewDTO> {
 
     private final FilmRepository filmRepository;
-
+    private final EnumMapper enumMapper;
 
     @Override
     public Review toEntity(ReviewDTO reviewDTO) {
@@ -25,6 +25,7 @@ public class ReviewMapper implements ClassMapper<Review, ReviewDTO> {
 
         Review review = Review.builder()
                 .id(reviewDTO.getId())
+                .filmAssessment(enumMapper.stringToFilmAssessment(reviewDTO.getFilmAssessment()))
                 .userName(reviewDTO.getUserName())
                 .film(film)
                 .description(reviewDTO.getDescription())
@@ -39,6 +40,7 @@ public class ReviewMapper implements ClassMapper<Review, ReviewDTO> {
 
         ReviewDTO reviewDTO = ReviewDTO.builder()
                 .id(entity.getId())
+                .filmAssessment(enumMapper.filmAssessmentToString(entity.getFilmAssessment()))
                 .userName(entity.getUserName())
                 .filmId(entity.getFilm().getId())
                 .description(entity.getDescription())

@@ -11,15 +11,15 @@ public interface UserService {
 
     UserDTO register(UserDTO userDTO);
     void deleteUser(String email);
+    void changeUserRole(String email, Role role);
+    void changePassword(String email, String newPassword);
 
     Boolean existsByEmail(String email);
     Optional<UserDTO> getUserByEmail(String email);
     Optional<UserDTO> getUserById(Long id);
 
-    void changePassword(String email, String newPassword);
     void addToBalance(String email, BigDecimal amount);
     void decreaseBalance(String email, BigDecimal amount);
-    void changeUserRole(String email, Role role);
 
     List<UserDTO> getUsersByRole(Role role);
 

@@ -7,9 +7,9 @@ import java.util.List;
 public interface FilmService {
 
     FilmDTO createFilm(FilmDTO filmDTO);
-    void deleteFilm(FilmDTO filmDTO);
+    void deleteFilmById(Long id);
 
-    FilmDTO editFilm(FilmDTO filmDTO);
+    FilmDTO editFilm(Long id, FilmDTO filmDTO);
 
     FilmDTO getFilmById(Long filmId);
     FilmDTO getFilmByName(String filmName);

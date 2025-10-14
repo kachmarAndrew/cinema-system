@@ -1,5 +1,6 @@
 package com.example.cinema_system.mapper;
 
+import com.example.cinema_system.entity.enums.FilmAssessment;
 import com.example.cinema_system.entity.enums.Genre;
 import com.example.cinema_system.entity.enums.Role;
 import com.example.cinema_system.entity.enums.TicketStatus;
@@ -7,6 +8,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EnumMapper { // ternary operator
+
+
+    // FilmAssessment
+
+    public String filmAssessmentToString(FilmAssessment filmAssessment) {
+        return filmAssessment == null ? null : filmAssessment.name();
+    }
+    public FilmAssessment stringToFilmAssessment(String filmAssessment) {
+        return filmAssessment == null ? null :FilmAssessment.valueOf(filmAssessment);
+    }
 
     // == Role ==
     public String roleToString(Role role) {
@@ -26,23 +37,19 @@ public class EnumMapper { // ternary operator
 
     // == TicketStatus ==
     public String ticketStatusToString(TicketStatus ticketStatus) {
-
         if (ticketStatus == null) {
             return null;
         } else {
             return ticketStatus.name();
         }
-
     }
 
     public TicketStatus stringToTicketStatus(String ticketStatus) {
-
         if (ticketStatus == null) {
             return null;
         } else {
             return TicketStatus.valueOf(ticketStatus);
         }
-
     }
 
 }

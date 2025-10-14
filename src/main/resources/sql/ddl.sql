@@ -92,6 +92,7 @@ CREATE TABLE order_items
 -- ============================================
 CREATE TABLE reviews (
     id BIGSERIAL PRIMARY KEY,
+    film_assessment VARCHAR(20) NOT NULL,
     user_name VARCHAR(20) NOT NULL,
     description VARCHAR(255) NOT NULL,
     film_id BIGINT NOT NULL REFERENCES films (id) ON DELETE CASCADE

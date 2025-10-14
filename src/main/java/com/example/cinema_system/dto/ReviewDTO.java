@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class ReviewDTO implements DataTransferObject {
 
     private Long id;
+    private String filmAssessment;
     private String userName;
     private Long filmId;
     private String description;
