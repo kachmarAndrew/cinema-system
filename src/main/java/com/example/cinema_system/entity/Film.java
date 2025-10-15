@@ -1,6 +1,7 @@
 package com.example.cinema_system.entity;
 
 import com.example.cinema_system.entity.enums.Genre;
+import com.example.cinema_system.entity.enums.Language;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,10 @@ public class Film {
     @Enumerated(EnumType.STRING)
     @Column(name = "genre", nullable = false)
     private Genre genre;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "language", nullable = false)
+    private Language language;
 
     @Column(name = "release_at", nullable = false)
     private LocalDateTime releaseAt;

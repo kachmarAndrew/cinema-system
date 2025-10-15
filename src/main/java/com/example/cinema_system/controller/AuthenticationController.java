@@ -16,16 +16,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class AuthenticationController {
+public class AuthenticationController { // TODO create a .html templates for every return in methods below
 
     private final UserService userService;
 
-    @GetMapping("/login") // TODO create a .html template
+    @GetMapping("/login")
     public String loginPage() {
         return "auth/login";
     }
 
-    @GetMapping("/login") // TODO create a .html template
+    @GetMapping("/login")
     public String getRegistrationForm(Model model) {
         if (!model.containsAttribute("user")) {
             model.addAttribute("user", new UserDTO());
@@ -33,7 +33,7 @@ public class AuthenticationController {
         return "auth/register";
     }
 
-    @PostMapping("/register") // TODO create a .html template
+    @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "auth/register";

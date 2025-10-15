@@ -18,6 +18,7 @@ public class FilmDTO implements DataTransferObject {
     private Long id;
     private String name;
     private String genre;
+    private String language;
     private LocalDateTime releaseAt;
     private LocalDateTime endAt;
     private List<SessionDTO> sessions;

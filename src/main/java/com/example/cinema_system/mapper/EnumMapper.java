@@ -1,22 +1,25 @@
 package com.example.cinema_system.mapper;
 
-import com.example.cinema_system.entity.enums.FilmAssessment;
-import com.example.cinema_system.entity.enums.Genre;
-import com.example.cinema_system.entity.enums.Role;
-import com.example.cinema_system.entity.enums.TicketStatus;
+import com.example.cinema_system.entity.enums.*;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EnumMapper { // ternary operator
 
+    // == Language ==
+    public String languageToString(Language language) {
+        return language == null ? null : language.name();
+    }
+    public Language stringToLanguage(String language) {
+        return language == null ? null : Language.valueOf(language);
+    }
 
-    // FilmAssessment
-
+    // == FilmAssessment ==
     public String filmAssessmentToString(FilmAssessment filmAssessment) {
         return filmAssessment == null ? null : filmAssessment.name();
     }
     public FilmAssessment stringToFilmAssessment(String filmAssessment) {
-        return filmAssessment == null ? null :FilmAssessment.valueOf(filmAssessment);
+        return filmAssessment == null ? null : FilmAssessment.valueOf(filmAssessment);
     }
 
     // == Role ==

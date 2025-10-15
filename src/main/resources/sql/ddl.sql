@@ -31,6 +31,7 @@ CREATE TABLE films
     id         BIGSERIAL PRIMARY KEY,
     name       VARCHAR(255) NOT NULL,
     genre      VARCHAR(50)  NOT NULL,
+    language   VARCHAR(50)  NOT NULL DEFAULT 'Ukrainian',
     release_at TIMESTAMP    NOT NULL,
     end_at     TIMESTAMP
 );
