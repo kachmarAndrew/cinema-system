@@ -2,16 +2,19 @@ package com.example.cinema_system.service.implementation;
 
 import com.example.cinema_system.dto.FilmDTO;
 import com.example.cinema_system.entity.Film;
+import com.example.cinema_system.entity.enums.Genre;
+import com.example.cinema_system.entity.enums.Language;
 import com.example.cinema_system.exception.BadRequestException;
 import com.example.cinema_system.exception.FilmNotFoundException;
 import com.example.cinema_system.mapper.EnumMapper;
 import com.example.cinema_system.mapper.FilmMapper;
-import com.example.cinema_system.mapper.ReviewMapper;
-import com.example.cinema_system.mapper.SessionMapper;
 import com.example.cinema_system.repository.FilmRepository;
+import com.example.cinema_system.repository.specification.FilmSpecification;
 import com.example.cinema_system.service.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +27,17 @@ public class FilmServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
     private final FilmMapper filmMapper;
     private final EnumMapper enumMapper;
+
+    @Override
+    public Page<FilmDTO> getAllFilms(Pageable pageable, String genre, String language, String search) {
+        Genre specificationGenre = enumMapper.stringToGenre(genre);
+        Language specificationLanguage = enumMapper.stringToLanguage(language);
+
+        Specification<Film> specification = FilmSpecification.filterByParams(specificationGenre, specificationLanguage, search);
+
+        return filmRepository.findAll(specification, pageable)
+                .map(filmMapper::toDTO);
+    }
 
     @Override
     public FilmDTO createFilm(FilmDTO filmDTO) {
