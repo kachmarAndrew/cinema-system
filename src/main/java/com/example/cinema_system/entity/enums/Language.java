@@ -7,6 +7,9 @@ public enum Language {
     Italian,
     Japanese,
     Indonesian,
-    Polish
+    Polish,
+    GERMAN,
+    FRENCH,
+    SPANISH
 
 }
