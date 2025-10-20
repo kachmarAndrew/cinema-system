@@ -1,6 +1,6 @@
 package com.example.cinema_system.repository;
 
-import com.example.cinema_system.entity.OrderItem;
+import com.example.cinema_system.model.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 

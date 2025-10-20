@@ -1,9 +1,9 @@
 package com.example.cinema_system.mapper;
 
 import com.example.cinema_system.dto.TicketDTO;
-import com.example.cinema_system.entity.Session;
-import com.example.cinema_system.entity.Ticket;
-import com.example.cinema_system.entity.User;
+import com.example.cinema_system.model.Session;
+import com.example.cinema_system.model.Ticket;
+import com.example.cinema_system.model.User;
 import com.example.cinema_system.exception.SessionNotFoundException;
 import com.example.cinema_system.exception.UserNotFoundException;
 import com.example.cinema_system.repository.SessionRepository;

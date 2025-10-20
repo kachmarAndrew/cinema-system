@@ -1,6 +1,5 @@
 package com.example.cinema_system.dto;
 
-import com.example.cinema_system.entity.enums.TicketStatus;
 import com.example.cinema_system.util.DataTransferObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

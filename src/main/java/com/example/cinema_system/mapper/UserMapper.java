@@ -1,9 +1,9 @@
 package com.example.cinema_system.mapper;
 
 import com.example.cinema_system.dto.UserDTO;
-import com.example.cinema_system.entity.Order;
-import com.example.cinema_system.entity.Ticket;
-import com.example.cinema_system.entity.User;
+import com.example.cinema_system.model.Order;
+import com.example.cinema_system.model.Ticket;
+import com.example.cinema_system.model.User;
 import com.example.cinema_system.repository.OrderRepository;
 import com.example.cinema_system.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,9 @@ public class UserMapper implements ClassMapper<User, UserDTO> {
                 .password(userDTO.getPassword())
                 .role(enumMapper.stringToRole(userDTO.getRole()))
                 .balance(userDTO.getBalance())
+                .isVerified(userDTO.isVerified())
+                .verificationToken(userDTO.getVerificationToken())
+                .verificationTokenExpiry(userDTO.getVerificationTokenExpiry())
                 .tickets(tickets)
                 .orders(orders)
                 .build();
@@ -49,6 +52,9 @@ public class UserMapper implements ClassMapper<User, UserDTO> {
                 .password(entity.getPassword())
                 .role(enumMapper.roleToString(entity.getRole()))
                 .balance(entity.getBalance())
+                .isVerified(entity.isVerified())
+                .verificationToken(entity.getVerificationToken())
+                .verificationTokenExpiry(entity.getVerificationTokenExpiry())
                 .build();
 
         return userDTO;

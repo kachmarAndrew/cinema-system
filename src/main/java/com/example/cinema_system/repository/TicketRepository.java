@@ -1,7 +1,6 @@
 package com.example.cinema_system.repository;
 
-import com.example.cinema_system.entity.Ticket;
-import org.hibernate.query.criteria.JpaSearchedCase;
+import com.example.cinema_system.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -14,17 +14,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())                     // для розробки; в проді не вимикай бездумно
+                //.csrf(csrf -> csrf.disable())                     // for development; -> in serious testing enable it
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()                     // Дозволити всі запити
+                        .requestMatchers("/register", "/verify", "/login").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.disable())                // відключити форму логіна
+                .formLogin(form -> form
+                        .loginPage("/login")                      // URL login page
+                        .loginProcessingUrl("/login")             // URL для обробки POST запиту
+                        .usernameParameter("username")            // name variable email in form
+                        .passwordParameter("password")            // name variable password in form
+                        .defaultSuccessUrl("/", true)       // where to redirect after success login.
+                        .failureUrl("/login?error=true")         // where to redirect when page have errors
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll()
+                )
                 .httpBasic(basic -> basic.disable());             // відключити basic auth (опційно)
 
         return http.build();
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

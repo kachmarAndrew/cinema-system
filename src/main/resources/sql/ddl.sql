@@ -20,7 +20,10 @@ CREATE TABLE users
     email    VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255)        NOT NULL,
     role     VARCHAR(20)         NOT NULL,
-    balance  DECIMAL(10, 2)      NOT NULL DEFAULT 0.00
+    balance  DECIMAL(10, 2)      NOT NULL DEFAULT 0.00,
+    verification_token VARCHAR(512),
+    verification_token_expiry TIMESTAMP,
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -- ============================================

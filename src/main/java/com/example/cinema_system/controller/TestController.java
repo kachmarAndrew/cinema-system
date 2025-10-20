@@ -15,7 +15,6 @@ public class TestController {
     public String hello() {
         return "hello test commit Yaryna";
     }
-    
 
     @GetMapping("/helloViktoria")
     public String helloViktoria() {

@@ -1,7 +1,7 @@
 package com.example.cinema_system.repository;
 
-import com.example.cinema_system.entity.Film;
-import com.example.cinema_system.entity.Session;
+import com.example.cinema_system.model.Film;
+import com.example.cinema_system.model.Session;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

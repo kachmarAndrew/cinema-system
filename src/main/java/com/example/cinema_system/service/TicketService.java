@@ -1,7 +1,7 @@
 package com.example.cinema_system.service;
 
 import com.example.cinema_system.dto.TicketDTO;
-import com.example.cinema_system.entity.enums.TicketStatus;
+import com.example.cinema_system.model.enums.TicketStatus;
 
 import java.util.List;
 

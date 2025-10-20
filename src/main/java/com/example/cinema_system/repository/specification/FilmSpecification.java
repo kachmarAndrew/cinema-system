@@ -1,8 +1,8 @@
 package com.example.cinema_system.repository.specification;
 
-import com.example.cinema_system.entity.Film;
-import com.example.cinema_system.entity.enums.Genre;
-import com.example.cinema_system.entity.enums.Language;
+import com.example.cinema_system.model.Film;
+import com.example.cinema_system.model.enums.Genre;
+import com.example.cinema_system.model.enums.Language;
 import org.springframework.data.jpa.domain.Specification;
 
 public class FilmSpecification {

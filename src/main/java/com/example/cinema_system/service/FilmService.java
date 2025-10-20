@@ -1,8 +1,6 @@
 package com.example.cinema_system.service;
 
 import com.example.cinema_system.dto.FilmDTO;
-import com.example.cinema_system.entity.enums.Genre;
-import com.example.cinema_system.entity.enums.Language;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

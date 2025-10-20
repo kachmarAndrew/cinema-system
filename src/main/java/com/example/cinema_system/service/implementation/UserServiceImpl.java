@@ -1,8 +1,8 @@
 package com.example.cinema_system.service.implementation;
 
 import com.example.cinema_system.dto.UserDTO;
-import com.example.cinema_system.entity.User;
-import com.example.cinema_system.entity.enums.Role;
+import com.example.cinema_system.model.User;
+import com.example.cinema_system.model.enums.Role;
 import com.example.cinema_system.exception.UserNotFoundException;
 import com.example.cinema_system.logger.Logger;
 import com.example.cinema_system.mapper.UserMapper;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,11 @@ public class UserServiceImpl implements UserService {
         User user = User.builder()
                 .email(userDTO.getEmail())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
+                // ensure required DB fields are set
+                .verificationToken(userDTO.getVerificationToken())
+                .verificationTokenExpiry(userDTO.getVerificationTokenExpiry())
+                .isVerified(false)
+                .balance(userDTO.getBalance() == null ? BigDecimal.ZERO : userDTO.getBalance())
                 .build();
 
         securityLogger.logRegistrationSuccess(userDTO.getEmail());
@@ -108,6 +114,35 @@ public class UserServiceImpl implements UserService {
                 .findUsersByRole(role).stream()
                 .map(userMapper::toDTO)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public boolean verifyUserByCode(String email, String code) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("user.not_found"));
+
+        if (user.isVerified()) return true; // already verified
+
+        if (user.getVerificationToken() == null) return false;
+        if (!user.getVerificationToken().equals(code)) return false;
+        LocalDateTime expiry = user.getVerificationTokenExpiry();
+        if (expiry == null || expiry.isBefore(LocalDateTime.now())) return false;
+
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public void markAsVerified(String email) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("user.not_found"));
+
+        user.setVerified(true);
+        user.setVerificationToken(null);
+        user.setVerificationTokenExpiry(null);
+        userRepository.save(user);
+        securityLogger.logRegistrationSuccess(email);
     }
 
 }

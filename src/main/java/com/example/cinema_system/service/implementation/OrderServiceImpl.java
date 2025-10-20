@@ -1,8 +1,8 @@
 package com.example.cinema_system.service.implementation;
 
 import com.example.cinema_system.dto.OrderDTO;
-import com.example.cinema_system.entity.Order;
-import com.example.cinema_system.entity.User;
+import com.example.cinema_system.model.Order;
+import com.example.cinema_system.model.User;
 import com.example.cinema_system.exception.BadRequestException;
 import com.example.cinema_system.exception.OrderNotFoundException;
 import com.example.cinema_system.exception.UserNotFoundException;
@@ -11,7 +11,6 @@ import com.example.cinema_system.repository.OrderItemRepository;
 import com.example.cinema_system.repository.OrderRepository;
 import com.example.cinema_system.repository.UserRepository;
 import com.example.cinema_system.service.OrderService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,5 @@
 package com.example.cinema_system.dto;
 
-import com.example.cinema_system.entity.enums.Role;
 import com.example.cinema_system.util.DataTransferObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +20,8 @@ public class UserDTO implements DataTransferObject {
     private String password;
     private String role;
     private BigDecimal balance;
+    private boolean isVerified;
+    private String verificationToken;
+    private LocalDateTime verificationTokenExpiry;
 
 }

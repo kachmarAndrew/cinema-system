@@ -1,11 +1,10 @@
 package com.example.cinema_system.mapper;
 
 
-import com.example.cinema_system.dto.OrderDTO;
 import com.example.cinema_system.dto.OrderItemDTO;
-import com.example.cinema_system.entity.Order;
-import com.example.cinema_system.entity.OrderItem;
-import com.example.cinema_system.entity.Ticket;
+import com.example.cinema_system.model.Order;
+import com.example.cinema_system.model.OrderItem;
+import com.example.cinema_system.model.Ticket;
 import com.example.cinema_system.exception.OrderNotFoundException;
 import com.example.cinema_system.exception.TicketNotFoundException;
 import com.example.cinema_system.repository.OrderRepository;

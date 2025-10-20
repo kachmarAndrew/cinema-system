@@ -1,14 +1,13 @@
-package com.example.cinema_system.entity;
+package com.example.cinema_system.model;
 
-import com.example.cinema_system.entity.enums.Genre;
-import com.example.cinema_system.entity.enums.Language;
+import com.example.cinema_system.model.enums.Genre;
+import com.example.cinema_system.model.enums.Language;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

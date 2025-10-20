@@ -1,7 +1,7 @@
 package com.example.cinema_system.repository;
 
-import com.example.cinema_system.entity.User;
-import com.example.cinema_system.entity.enums.Role;
+import com.example.cinema_system.model.User;
+import com.example.cinema_system.model.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

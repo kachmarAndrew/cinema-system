@@ -1,6 +1,6 @@
-package com.example.cinema_system.entity;
+package com.example.cinema_system.model;
 
-import com.example.cinema_system.entity.enums.FilmAssessment;
+import com.example.cinema_system.model.enums.FilmAssessment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

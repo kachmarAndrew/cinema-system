@@ -1,6 +1,6 @@
 package com.example.cinema_system.mapper;
 
-import com.example.cinema_system.entity.enums.*;
+import com.example.cinema_system.model.enums.*;
 import org.springframework.stereotype.Component;
 
 @Component

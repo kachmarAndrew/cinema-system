@@ -1,7 +1,7 @@
 package com.example.cinema_system.mapper;
 
 import com.example.cinema_system.dto.FilmDTO;
-import com.example.cinema_system.entity.Film;
+import com.example.cinema_system.model.Film;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.example.cinema_system.service;
 
 import com.example.cinema_system.dto.UserDTO;
-import com.example.cinema_system.entity.enums.Role;
+import com.example.cinema_system.model.enums.Role;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,5 +22,9 @@ public interface UserService {
     void decreaseBalance(String email, BigDecimal amount);
 
     List<UserDTO> getUsersByRole(Role role);
+
+    // New methods for verification
+    boolean verifyUserByCode(String email, String code);
+    void markAsVerified(String email);
 
 }

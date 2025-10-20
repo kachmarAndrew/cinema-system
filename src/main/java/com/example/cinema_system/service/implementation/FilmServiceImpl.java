@@ -1,9 +1,9 @@
 package com.example.cinema_system.service.implementation;
 
 import com.example.cinema_system.dto.FilmDTO;
-import com.example.cinema_system.entity.Film;
-import com.example.cinema_system.entity.enums.Genre;
-import com.example.cinema_system.entity.enums.Language;
+import com.example.cinema_system.model.Film;
+import com.example.cinema_system.model.enums.Genre;
+import com.example.cinema_system.model.enums.Language;
 import com.example.cinema_system.exception.BadRequestException;
 import com.example.cinema_system.exception.FilmNotFoundException;
 import com.example.cinema_system.mapper.EnumMapper;

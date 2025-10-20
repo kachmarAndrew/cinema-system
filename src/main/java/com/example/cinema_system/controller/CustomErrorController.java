@@ -1,6 +1,6 @@
 package com.example.cinema_system.controller;
 
-import com.example.cinema_system.entity.enums.ErrorMessage;
+import com.example.cinema_system.model.enums.ErrorMessage;
 import com.example.cinema_system.logger.Logger;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;

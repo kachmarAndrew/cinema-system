@@ -1,6 +1,6 @@
 package com.example.cinema_system.repository;
 
-import com.example.cinema_system.entity.Review;
+import com.example.cinema_system.model.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

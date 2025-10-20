@@ -1,6 +1,6 @@
-package com.example.cinema_system.entity;
+package com.example.cinema_system.model;
 
-import com.example.cinema_system.entity.enums.TicketStatus;
+import com.example.cinema_system.model.enums.TicketStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,7 +43,7 @@ public class Ticket {
     @Column(name = "ticket_status", nullable = false)
     private TicketStatus status = TicketStatus.AVAILABLE;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
     @Column(name = "created_at")

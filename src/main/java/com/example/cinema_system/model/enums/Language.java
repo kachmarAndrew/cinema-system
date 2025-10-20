@@ -1,4 +1,4 @@
-package com.example.cinema_system.entity.enums;
+package com.example.cinema_system.model.enums;
 
 public enum Language {
 

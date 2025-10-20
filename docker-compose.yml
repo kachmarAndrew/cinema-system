@@ -30,3 +30,5 @@ volumes:
 #     docker-compose.yml - describe all containers we need to run our program, all we have in this file can be written in terminal by commands
 #
 # Volume is the persistence part of container (by default container is stateless(data don`t persist), but volume can make it stateful (which is not bad -> cause data in DB will be saved))
+#
+# docker compose up --build --> the main command which build and run application

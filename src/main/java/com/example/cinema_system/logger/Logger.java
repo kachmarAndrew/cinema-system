@@ -1,6 +1,6 @@
 package com.example.cinema_system.logger;
 
-import com.example.cinema_system.entity.enums.Role;
+import com.example.cinema_system.model.enums.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +31,10 @@ public class Logger {
 
     public void logPasswordRecoveryRequest(String email) {
         log.info("Password recovery request: {}", maskEmail(email));
+    }
+
+    public void logEmailSendError(String email) {
+        log.error("Failed sending email to: {}", maskEmail(email));
     }
 
     public void logPasswordResetSuccess(String email) {

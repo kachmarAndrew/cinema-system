@@ -1,7 +1,7 @@
 package com.example.cinema_system.service.implementation;
 
 import com.example.cinema_system.dto.ReviewDTO;
-import com.example.cinema_system.entity.Review;
+import com.example.cinema_system.model.Review;
 import com.example.cinema_system.exception.BadRequestException;
 import com.example.cinema_system.exception.ReviewNotFoundException;
 import com.example.cinema_system.mapper.ReviewMapper;

@@ -1,16 +1,13 @@
 package com.example.cinema_system.mapper;
 
 import com.example.cinema_system.dto.OrderDTO;
-import com.example.cinema_system.entity.Order;
-import com.example.cinema_system.entity.OrderItem;
-import com.example.cinema_system.entity.User;
+import com.example.cinema_system.model.Order;
+import com.example.cinema_system.model.User;
 import com.example.cinema_system.exception.UserNotFoundException;
 import com.example.cinema_system.repository.OrderItemRepository;
 import com.example.cinema_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
